@@ -1,0 +1,4 @@
+driver=org.postgresql.Driver
+url=jdbc:postgresql://host.docker.internal:5433/rest
+user=xylindev
+password=mmorpg

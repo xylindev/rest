@@ -128,6 +128,7 @@ public class WasteTypeResource extends HttpServlet {
             try {
                 wasteTypeDAO.delete(id);
                 res.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            } finally {
                 wasteTypeDAO.getCONNECTION().close();
             }
         } catch (SQLException e) {

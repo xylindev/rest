@@ -5,6 +5,8 @@ public class WasteType {
     private String name;
     private int pointsPerKilo;
 
+    public WasteType(){}
+
     public WasteType(int id, String name, int pointsPerKilo){
         this.id = id;
         this.name = name;

@@ -10,6 +10,7 @@ import java.util.List;
 
 import models.db.PSQLConnection;
 import models.dto.CollectionPoint;
+import models.dto.PointStatus;
 import models.dto.WasteType;
 
 public class CollectionPointDAO {
@@ -101,12 +102,65 @@ public class CollectionPointDAO {
     }
 
     public boolean clearDeposits(int pointId) throws SQLException {
-        String sql = "DELETE FROM deposit WHERE pointid=?";
+        String sql = "UPDATE deposit SET collecte = true WHERE pointid=?";
 
         PreparedStatement ps = CONNECTION.prepareStatement(sql);
         ps.setInt(1, pointId);
         ps.executeUpdate();
 
         return true;
+    }
+
+    public PointStatus getPointStatus(int pointId) throws SQLException {
+        String sql = "SELECT c.id, c.adresse, c.capacitemax, " +
+                     "COALESCE((SELECT SUM(poids) FROM deposit WHERE pointid = c.id AND collecte = false), 0) AS charge " +
+                     "FROM CollectionPoint c WHERE c.id = ?";
+        
+        PreparedStatement ps = CONNECTION.prepareStatement(sql);
+        ps.setInt(1, pointId);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int id = rs.getInt("id");
+            String adresse = rs.getString("adresse");
+            double capaciteMax = rs.getDouble("capacitemax");
+            double charge = rs.getDouble("charge");
+
+            double remplissage = (capaciteMax > 0) ? (charge / capaciteMax) * 100.0 : 0;
+            
+            remplissage = Math.round(remplissage * 100.0) / 100.0;
+            boolean full = charge >= capaciteMax;
+
+            return new PointStatus(id, adresse, remplissage, full);
+        }
+        return null;
+    }
+
+    public List<PointStatus> getOverloadedPoints() throws SQLException {
+        List<PointStatus> overloaded = new ArrayList<>();
+        
+        String sql = "SELECT c.id, c.adresse, c.capacitemax, " +
+                     "COALESCE((SELECT SUM(poids) FROM deposit WHERE pointid = c.id AND collecte = false), 0) AS charge " +
+                     "FROM CollectionPoint c";
+        
+        PreparedStatement ps = CONNECTION.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            double capaciteMax = rs.getDouble("capacitemax");
+            double charge = rs.getDouble("charge");
+            double remplissage = (capaciteMax > 0) ? (charge / capaciteMax) * 100.0 : 0;
+
+            if (remplissage > 80.0) {
+                remplissage = Math.round(remplissage * 100.0) / 100.0;
+                overloaded.add(new PointStatus(
+                    rs.getInt("id"), 
+                    rs.getString("adresse"), 
+                    remplissage, 
+                    charge >= capaciteMax
+                ));
+            }
+        }
+        return overloaded;
     }
 }

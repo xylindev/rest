@@ -4,7 +4,6 @@ import java.sql.Connection;
 
 public class TestConnection {
     public static void main(String[] args) {
-        System.out.print(PSQLConnection.rootPath);
         try {
             Connection connection = PSQLConnection.getConnection();
 

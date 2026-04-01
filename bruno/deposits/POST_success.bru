@@ -1,0 +1,30 @@
+meta {
+  name: POST créer un dépôt (succès)
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/deposits
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "userId": 2,
+    "pointId": 2,
+    "wasteTypeId": 2,
+    "poids": 3.0
+  }
+}
+
+tests {
+  test("status 201", function() {
+    expect(res.getStatus()).to.equal(201);
+  });
+}

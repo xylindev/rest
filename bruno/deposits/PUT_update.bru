@@ -1,0 +1,34 @@
+meta {
+  name: PUT modifier un dépôt (complet)
+  type: http
+  seq: 7
+}
+
+put {
+  url: {{baseUrl}}/deposits/1
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "userId": 1,
+    "pointId": 1,
+    "wasteTypeId": 1,
+    "poids": 6.0,
+    "collecte": false
+  }
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("poids mis à jour", function() {
+    expect(res.getBody().poids).to.equal(6.0);
+  });
+}

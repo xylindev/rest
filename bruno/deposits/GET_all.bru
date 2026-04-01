@@ -1,0 +1,27 @@
+meta {
+  name: GET tous les dépôts (enrichis)
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/deposits
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("réponse est un tableau", function() {
+    expect(res.getBody()).to.be.an("array");
+  });
+  test("contient wasteTypeName et pointAdresse", function() {
+    var body = res.getBody();
+    if (body.length > 0) {
+      expect(body[0]).to.have.property("wasteTypeName");
+      expect(body[0]).to.have.property("pointAdresse");
+    }
+  });
+}

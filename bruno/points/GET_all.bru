@@ -1,0 +1,20 @@
+meta {
+  name: GET tous les points de collecte
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/points
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("réponse est un tableau", function() {
+    expect(res.getBody()).to.be.an("array");
+  });
+}

@@ -1,0 +1,29 @@
+meta {
+  name: POST créer un type de déchet
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/waste-types
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "id": 99,
+    "name": "Test déchet",
+    "pointsPerKilo": 10
+  }
+}
+
+tests {
+  test("status 201", function() {
+    expect(res.getStatus()).to.equal(201);
+  });
+}

@@ -1,0 +1,17 @@
+meta {
+  name: DELETE vider un point - 404 inexistant
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{baseUrl}}/points/9999/clear
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 404", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

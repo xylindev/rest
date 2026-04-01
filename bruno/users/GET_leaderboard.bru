@@ -1,0 +1,29 @@
+meta {
+  name: GET classement des recycleurs
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/users/leaderboard
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("réponse est un tableau", function() {
+    expect(res.getBody()).to.be.an("array");
+  });
+  test("max 10 résultats", function() {
+    expect(res.getBody().length).to.be.at.most(10);
+  });
+  test("contient un score", function() {
+    var body = res.getBody();
+    if (body.length > 0) {
+      expect(body[0]).to.have.property("score");
+    }
+  });
+}

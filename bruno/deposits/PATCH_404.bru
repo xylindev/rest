@@ -1,0 +1,27 @@
+meta {
+  name: PATCH dépôt - 404 inexistant
+  type: http
+  seq: 10
+}
+
+patch {
+  url: {{baseUrl}}/deposits/9999
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "poids": 5.0
+  }
+}
+
+tests {
+  test("status 404", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

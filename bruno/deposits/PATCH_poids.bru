@@ -1,0 +1,30 @@
+meta {
+  name: PATCH modifier partiellement un dépôt
+  type: http
+  seq: 9
+}
+
+patch {
+  url: {{baseUrl}}/deposits/1
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "poids": 8.0
+  }
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("poids mis à jour", function() {
+    expect(res.getBody().poids).to.equal(8.0);
+  });
+}

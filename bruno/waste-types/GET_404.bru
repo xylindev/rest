@@ -1,0 +1,17 @@
+meta {
+  name: GET type de déchet - 404 inexistant
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/waste-types/9999
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 404", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

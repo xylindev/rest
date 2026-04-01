@@ -1,0 +1,30 @@
+meta {
+  name: POST dépôt - 403 point saturé
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/deposits
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "userId": 2,
+    "pointId": 1,
+    "wasteTypeId": 1,
+    "poids": 99999.0
+  }
+}
+
+tests {
+  test("status 403 point saturé", function() {
+    expect(res.getStatus()).to.equal(403);
+  });
+}

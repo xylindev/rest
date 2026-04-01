@@ -1,0 +1,17 @@
+meta {
+  name: DELETE supprimer un type de déchet
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{baseUrl}}/waste-types/99
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 204", function() {
+    expect(res.getStatus()).to.equal(204);
+  });
+}

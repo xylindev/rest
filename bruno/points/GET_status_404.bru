@@ -1,0 +1,17 @@
+meta {
+  name: GET état d'un point - 404 inexistant
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/points/9999/status
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 404", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

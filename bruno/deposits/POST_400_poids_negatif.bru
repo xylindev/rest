@@ -1,0 +1,30 @@
+meta {
+  name: POST dépôt - 400 poids négatif
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/deposits
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "userId": 2,
+    "pointId": 1,
+    "wasteTypeId": 1,
+    "poids": -5.0
+  }
+}
+
+tests {
+  test("status 400 poids négatif", function() {
+    expect(res.getStatus()).to.equal(400);
+  });
+}

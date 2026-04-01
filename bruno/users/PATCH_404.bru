@@ -1,0 +1,27 @@
+meta {
+  name: PATCH utilisateur - 404 inexistant
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/users/9999
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "password": "secret"
+  }
+}
+
+tests {
+  test("status 404", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

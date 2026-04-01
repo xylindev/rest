@@ -1,0 +1,21 @@
+meta {
+  name: GET point de collecte par ID (avec déchets acceptés)
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/points/1
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("contient acceptedWastes", function() {
+    expect(res.getBody()).to.have.property("acceptedWastes");
+    expect(res.getBody().acceptedWastes).to.be.an("array");
+  });
+}

@@ -1,0 +1,28 @@
+meta {
+  name: PUT modifier un point de collecte
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/points/1
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "adresse": "12 Rue de l'Innovation, Lille (modifié)",
+    "capaciteMax": 600
+  }
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

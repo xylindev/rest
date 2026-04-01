@@ -1,0 +1,20 @@
+meta {
+  name: GET type de déchet par ID
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/waste-types/1
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("id correct", function() {
+    expect(res.getBody().id).to.equal(1);
+  });
+}

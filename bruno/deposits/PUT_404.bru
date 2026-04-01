@@ -1,0 +1,31 @@
+meta {
+  name: PUT dépôt - 404 inexistant
+  type: http
+  seq: 8
+}
+
+put {
+  url: {{baseUrl}}/deposits/9999
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "userId": 1,
+    "pointId": 1,
+    "wasteTypeId": 1,
+    "poids": 5.0,
+    "collecte": false
+  }
+}
+
+tests {
+  test("status 404", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

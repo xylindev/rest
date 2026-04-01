@@ -1,0 +1,30 @@
+meta {
+  name: PATCH modifier l'adresse d'un point
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/points/1
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "adresse": "12 Rue de l'Innovation, Lille"
+  }
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("adresse mise à jour", function() {
+    expect(res.getBody().adresse).to.equal("12 Rue de l'Innovation, Lille");
+  });
+}

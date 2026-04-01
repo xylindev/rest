@@ -1,0 +1,24 @@
+meta {
+  name: GET état de remplissage d'un point
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/points/1/status
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("contient remplissage et full", function() {
+    expect(res.getBody()).to.have.property("remplissage");
+    expect(res.getBody()).to.have.property("full");
+  });
+  test("remplissage est un nombre", function() {
+    expect(res.getBody().remplissage).to.be.a("number");
+  });
+}

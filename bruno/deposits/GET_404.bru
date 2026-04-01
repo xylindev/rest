@@ -1,0 +1,17 @@
+meta {
+  name: GET dépôt - 404 inexistant
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/deposits/9999
+  body: none
+  auth: none
+}
+
+tests {
+  test("status 404", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

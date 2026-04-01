@@ -1,0 +1,28 @@
+meta {
+  name: PUT modifier un type de déchet
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{baseUrl}}/waste-types/99
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Test déchet modifié",
+    "pointsPerKilo": 20
+  }
+}
+
+tests {
+  test("status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

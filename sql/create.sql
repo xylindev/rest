@@ -3,27 +3,43 @@ DROP TABLE IF EXISTS WasteType;
 DROP TABLE IF EXISTS CollectionPoint;
 DROP TABLE IF EXISTS users;
 
-CREATE TABLE WasteType(
+CREATE TABLE WasteType (
     id INT PRIMARY KEY,
-    name TEXT NOT NULL,
+    nom VARCHAR(100) NOT NULL,
     pointsPerKilo INT NOT NULL
 );
 
-CREATE TABLE CollectionPoint(
+CREATE TABLE CollectionPoint (
     id INT PRIMARY KEY,
-    adresse TEXT NOT NULL,
-    capaciteMax INT NOT NULL
+    adresse VARCHAR(255) NOT NULL,
+    capaciteMax FLOAT NOT NULL
 );
 
-CREATE TABLE accepts(
-    pointid INT REFERENCES CollectionPoint(id) ON DELETE CASCADE,
-    wastetypeid INT REFERENCES WasteType(id) ON DELETE CASCADE,
-    PRIMARY KEY(pointid, wastetypeid)
+CREATE TABLE accepts (
+    pointId INT,
+    wasteTypeId INT,
+    PRIMARY KEY (pointId, wasteTypeId),
+    FOREIGN KEY (pointId) REFERENCES CollectionPoint(id),
+    FOREIGN KEY (wasteTypeId) REFERENCES WasteType(id)
 );
 
-CREATE TABLE users(
+CREATE TABLE users (
     id INT PRIMARY KEY,
-    login TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    role TEXT NOT NULL CHECK (role IN ('USER', 'ADMIN'))
+    login VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    role VARCHAR(10) CHECK (role IN ('USER', 'ADMIN')) NOT NULL
+);
+
+CREATE TABLE Deposit (
+    id INT PRIMARY KEY,
+    userId INT,
+    pointId INT,
+    wasteTypeId INT,
+    poids FLOAT NOT NULL,
+    dateDepot DATETIME DEFAULT CURRENT_TIMESTAMP,
+    collecte BOOLEAN DEFAULT FALSE,
+    
+    FOREIGN KEY (userId) REFERENCES users(id),
+    FOREIGN KEY (pointId) REFERENCES CollectionPoint(id),
+    FOREIGN KEY (wasteTypeId) REFERENCES WasteType(id)
 );

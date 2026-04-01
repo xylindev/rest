@@ -28,9 +28,10 @@ INSERT INTO users VALUES
 (4, 'lucas',  'lucas',  'USER'),
 (5, 'admin',  'admin',  'ADMIN');
 
-INSERT INTO Deposit (id, userId, pointId, wasteTypeId, poids, collecte) VALUES
-(1, 1, 1, 1, 5.5, FALSE),
-(2, 2, 1, 2, 10.0, FALSE),
-(3, 1, 2, 3, 2.5, TRUE),
-(4, 2, 3, 1, 7.0, FALSE),
-(5, 1, 3, 3, 1.2, FALSE);
+-- id est SERIAL, on ne le fournit pas
+INSERT INTO Deposit (userId, pointId, wasteTypeId, poids, collecte) VALUES
+(1, 1, 1, 5.5, FALSE),
+(2, 1, 2, 10.0, FALSE),
+(1, 2, 3, 2.5, TRUE),
+(2, 3, 1, 7.0, FALSE),
+(1, 3, 3, 1.2, FALSE);

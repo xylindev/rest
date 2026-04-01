@@ -1,11 +1,12 @@
 DROP TABLE IF EXISTS accepts;
+DROP TABLE IF EXISTS Deposit;
 DROP TABLE IF EXISTS WasteType;
 DROP TABLE IF EXISTS CollectionPoint;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE WasteType (
     id INT PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL,
     pointsPerKilo INT NOT NULL
 );
 
@@ -31,14 +32,14 @@ CREATE TABLE users (
 );
 
 CREATE TABLE Deposit (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     userId INT,
     pointId INT,
     wasteTypeId INT,
     poids FLOAT NOT NULL,
-    dateDepot DATETIME DEFAULT CURRENT_TIMESTAMP,
+    dateDepot TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     collecte BOOLEAN DEFAULT FALSE,
-    
+
     FOREIGN KEY (userId) REFERENCES users(id),
     FOREIGN KEY (pointId) REFERENCES CollectionPoint(id),
     FOREIGN KEY (wasteTypeId) REFERENCES WasteType(id)
